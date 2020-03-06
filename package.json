@@ -22,9 +22,10 @@
     "@types/node": "^13.7.7",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts"
+    "dev": "ts-node-dev --respawn src/index.ts"
   }
 }
