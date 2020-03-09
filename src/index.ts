@@ -33,7 +33,8 @@ const main = async () => {
 
     const apolloServer = new ApolloServer({
         schema,
-        //acesso a key context para o acesso dos Resolvers, Apollo Server dá acesso ao req obj, garantindo acesso ao dados da session
+        //acesso a key context para o acesso dos Resolvers, 
+        //Apollo Server dá acesso ao req obj, garantindo acesso ao dados da session
         context: ({ req }: any) => ({ req })
     });
 
