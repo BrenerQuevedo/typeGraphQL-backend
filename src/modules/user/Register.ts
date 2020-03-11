@@ -3,17 +3,22 @@ import {
     Query,
     Mutation,
     Arg,
-    Authorized
+    UseMiddleware
 } from "type-graphql";
 
 import bcrypt from "bcryptjs"
 import { User } from "../../entity/User";
 import { RegisterInput } from "./register/RegisterInput";
+import { isAuth } from "../middleware/isAuth";
+import { logger } from "../middleware/logger";
+
 
 
 @Resolver()
 export class RegisterResolver {
-    @Authorized()
+    //pode-se criar diversos middlewares e utilizar na notação
+    //logger apenas para teste já que não há args
+    @UseMiddleware(isAuth, logger)
     @Query(() => String)
     async helloWorld() {
         return "Hello World"
