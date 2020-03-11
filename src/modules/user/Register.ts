@@ -2,7 +2,8 @@ import {
     Resolver,
     Query,
     Mutation,
-    Arg
+    Arg,
+    Authorized
 } from "type-graphql";
 
 import bcrypt from "bcryptjs"
@@ -12,6 +13,7 @@ import { RegisterInput } from "./register/RegisterInput";
 
 @Resolver()
 export class RegisterResolver {
+    @Authorized()
     @Query(() => String)
     async helloWorld() {
         return "Hello World"
