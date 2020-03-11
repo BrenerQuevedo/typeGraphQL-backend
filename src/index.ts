@@ -31,8 +31,8 @@ const main = async () => {
 
     const schema = await buildSchema({
         resolvers: [FetchResolver,RegisterResolver, LoginResolver],
-        authChecker: ({ }) => {
-            return true;
+        authChecker: ({context: {req}}) => {
+            return !!req.session.userId;
         }
     });
 
