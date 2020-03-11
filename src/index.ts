@@ -12,6 +12,7 @@ import cors from "cors";
 
 import { redis } from "./redis"
 import { LoginResolver } from "./modules/user/Login";
+import { FetchResolver } from "./modules/user/Me";
 
 const main = async () => {
 
@@ -29,7 +30,7 @@ const main = async () => {
 
 
     const schema = await buildSchema({
-        resolvers: [RegisterResolver, LoginResolver],
+        resolvers: [FetchResolver,RegisterResolver, LoginResolver],
     });
 
     const apolloServer = new ApolloServer({
@@ -48,23 +49,24 @@ const main = async () => {
 
     const RedisStore = connectRedis(session);
 
+    app.use(
+        session({
+           store: new RedisStore({
+               client: (redis as any),
+           }),
+           name: "qlid",
+           secret: "testeteste",
+           resave: false,
+           saveUninitialized: false,
+           cookie: {
+               httpOnly: true,
+               secure: process.env.NODE_ENV === "production",
+               maxAge: 1000 * 60 * 60 * 24 * 7 * 365 //7 ANOS,
+           },
+        })
+    );
+    
 
-    const sessionOption: session.SessionOptions = {
-        store: new RedisStore({
-            client: (redis as any),
-        }),
-        name: "qlid",
-        secret: "testeteste",
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
-        },
-    };
-
-    app.use(session(sessionOption));
 
     apolloServer.applyMiddleware({ app })
 
