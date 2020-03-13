@@ -7,7 +7,7 @@ import {
 
 import bcrypt from "bcryptjs"
 import { User } from "../../entity/User";
-import { MyContext } from "../../types/MyContext";
+import { MyContext } from "../types/MyContext";
 
 //nullable: o retorno pode ser nulo 
 @Resolver()
@@ -27,6 +27,10 @@ export class LoginResolver {
         const validPassword = await bcrypt.compare(password, user.password);
 
         if(!validPassword) {
+            return null;
+        }
+
+        if(!user.confirmed) {
             return null;
         }
 
