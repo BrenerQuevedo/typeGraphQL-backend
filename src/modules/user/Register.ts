@@ -11,6 +11,8 @@ import { User } from "../../entity/User";
 import { RegisterInput } from "./register/RegisterInput";
 import { isAuth } from "../middleware/isAuth";
 import { logger } from "../middleware/logger";
+import { sendEmail } from "../utils/sendEmail";
+import { createConfirmationUrl } from "../utils/confirmationUrl";
 
 
 
@@ -37,7 +39,9 @@ export class RegisterResolver {
             lastName,
             email,
             password: hashedPassword
-        }).save()
+        }).save();
+
+        await sendEmail(email, await createConfirmationUrl(user.id));
 
         return user;
     }
