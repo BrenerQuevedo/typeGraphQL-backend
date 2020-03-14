@@ -13,6 +13,7 @@ import cors from "cors";
 import { redis } from "./redis"
 import { LoginResolver } from "./modules/user/Login";
 import { FetchResolver } from "./modules/user/Me";
+import { ConfirmUserResolver } from "./modules/user/confirmUser";
 
 const main = async () => {
 
@@ -30,7 +31,7 @@ const main = async () => {
 
 
     const schema = await buildSchema({
-        resolvers: [FetchResolver,RegisterResolver, LoginResolver],
+        resolvers: [FetchResolver,RegisterResolver, LoginResolver, ConfirmUserResolver],
         authChecker: ({context: {req}}) => {
             return !!req.session.userId;
         }
