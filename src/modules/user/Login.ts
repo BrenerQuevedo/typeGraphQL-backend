@@ -7,7 +7,7 @@ import {
 
 import bcrypt from "bcryptjs"
 import { User } from "../../entity/User";
-import { MyContext } from "../types/MyContext";
+import { MyContext } from "../../types/MyContext";
 
 //nullable: o retorno pode ser nulo 
 @Resolver()

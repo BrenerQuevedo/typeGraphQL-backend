@@ -5,7 +5,7 @@ import {
     Ctx
 } from "type-graphql";
 
-import { MyContext } from "../types/MyContext";
+import { MyContext } from "../../types/MyContext";
 import { redis } from "../../redis";
 import { User } from "../../entity/User";
 
@@ -26,6 +26,8 @@ export class ConfirmUserResolver {
 
         //update do estado de confirmação do email
         await User.update({id: parseInt(userId, 10)}, {confirmed: true});
+        //deleta o token após a confirmação
+        await redis.del(token);
 
         return true;
     }
