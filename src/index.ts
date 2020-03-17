@@ -10,10 +10,7 @@ import connectRedis from "connect-redis"
 import cors from "cors";
 
 
-import { redis } from "./redis"
-import { LoginResolver } from "./modules/user/Login";
-import { FetchResolver } from "./modules/user/Me";
-import { ConfirmUserResolver } from "./modules/user/confirmUser";
+import { redis } from "./redis";
 
 const main = async () => {
 
@@ -31,7 +28,7 @@ const main = async () => {
 
 
     const schema = await buildSchema({
-        resolvers: [FetchResolver,RegisterResolver, LoginResolver, ConfirmUserResolver],
+        resolvers: [__dirname + "/modules/**/*.ts"],
         authChecker: ({context: {req}}) => {
             return !!req.session.userId;
         }
