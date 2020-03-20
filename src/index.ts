@@ -4,7 +4,6 @@ import { ApolloServer } from "apollo-server-express";
 import Express from "express";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
-import { RegisterResolver } from "./modules/user/register";
 import session from "express-session"
 import connectRedis from "connect-redis"
 import cors from "cors";
